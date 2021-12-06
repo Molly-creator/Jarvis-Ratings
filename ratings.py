@@ -1,0 +1,1 @@
+open('ratings.csv', 'r')
