@@ -60,6 +60,6 @@ for ($i = 1; $i < count($Bitdata); $i++) {
 $x = new DashBoard([$Ex1, $Ex2, $Ex3, $Ex4, $Ex5]);
 
 
-// $x->showDashboard();
+$x->showDashboard();
 $x->displayMonthRatings('Flex met boxen');
 
