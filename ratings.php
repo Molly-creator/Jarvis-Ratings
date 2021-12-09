@@ -1,6 +1,7 @@
 <?php
 
 require('./ExerciseDashboard.php');
+// require('./test.php');
 
 $file = './ratings.csv';
 $Bitdata = [];
@@ -43,7 +44,7 @@ for ($i = 1; $i < count($Bitdata); $i++) {
         $Ex1->AddRatings((int)$Bitdata[$i][3]);
         $Ex1->Ratingdate($Bitdata[$i][4]);
     } elseif ($Bitdata[$i][0] == 'Commandline commands') {
-        $Ex2->AddRatings($Bitdata[$i][3]);
+        $Ex2->AddRatings((int)$Bitdata[$i][3]);
         $Ex2->Ratingdate($Bitdata[$i][4]);
     } elseif ($Bitdata[$i][0] == 'Read that data') {
         $Ex3->AddRatings((int)$Bitdata[$i][3]);
@@ -57,9 +58,13 @@ for ($i = 1; $i < count($Bitdata); $i++) {
     }
 }
 
-$x = new DashBoard([$Ex1, $Ex2, $Ex3, $Ex4, $Ex5]);
+$DashBoard = new DashBoard([$Ex1, $Ex2, $Ex3, $Ex4, $Ex5]);
 
 
-$x->showDashboard();
-$x->displayMonthRatings('Flex met boxen');
+$DashBoard ->showDashboard();
+$DashBoard ->displayMonthRatings('Flex met boxen');
+$DashBoard ->displayMonthRatings('Commandline commands');
+$DashBoard ->displayMonthRatings('Read that data');
+$DashBoard ->displayMonthRatings('Maak een kattenwebsite');
+$DashBoard ->displayMonthRatings('Hover kan je gaan');
 

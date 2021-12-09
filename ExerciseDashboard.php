@@ -20,99 +20,149 @@ class DashBoard
         $ExTitle = $title->getTitle();
         $ratings = $title->getRating();
         $inputDates = $title->getDate();
+        $Dates = [];
 
-        $Month = $this->ParseDate($inputDates, $ExTitle);
-        $Rating_1 = [];
-        $Rating_2 = [];
-        $Rating_3 = [];
-        $Rating_4 = [];
-        $Rating_5 = [];
+        foreach ($inputDates as  $date) {
+                $Parsedate = strtotime($date);
+                array_push($Dates, date("M", $Parsedate));
+        }
         
-        foreach($ratings as $vals) {
-            if ($vals == 1) {
-                array_push($Rating_1, $vals);
-           } elseif ($vals == 2) {
-                array_push($Rating_2, $vals);
-            } elseif ($vals == 3) {
-                array_push($Rating_3, $vals);
-            } elseif ($vals == 4) {
-                array_push($Rating_4, $vals);
-            } elseif ($vals == 5) {
-                array_push($Rating_5, $vals);
-            }
+        $Ratings[$ExTitle] = [];
+        for($i=0;$i<count($ratings);$i++) {
+                array_push($Ratings[$ExTitle], $ratings[$i], $Dates[$i]);
         }
 
-        $Ratings[$ExTitle] = [
-            'month' => $Month,
-            '1' => $Rating_1,
-            '2' => $Rating_2,
-            '3' => $Rating_3,
-            '4' => $Rating_4,
-            '5' => $Rating_5
-        ];
-
-              
         $this->Ratings = $Ratings;
+        $this->Dates = $Dates;
     }
-    private function ParseDate($input, $title)
-    {   
-        $Month[$title] = [];
-        foreach ($input as  $date) {
-            $Parsedate = strtotime($date);
-            array_push($Month, date("M", $Parsedate));
-        }
-       return $Month;
-    }
-    public function showDashboard()
-    {   $Ratings = $this->Ratings;
 
-        echo "Dashboard ratings Bit Academy excersises" . PHP_EOL;
+    public function showDashboard()
+    {   
+        $Ratings = $this->Ratings;  
+
+        echo "\n Dashboard ratings Bit Academy excersises" . PHP_EOL;
         $width = "| %-30.30s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.8s |\n";
         echo "---------------------------------------------------------------------------------------------------------------" . PHP_EOL;
         printf($width, "title", "total", "5 star", "4 star", "3 star", "2 star", "1 star", "mean");
         echo "---------------------------------------------------------------------------------------------------------------" . PHP_EOL;
+       
+        foreach ($Ratings as $title => $x) {
+            
+                $RatingDist = array_count_values($x);
+                $nRating = ($RatingDist[5]  + $RatingDist[4] + $RatingDist[3]  + $RatingDist[2]  + $RatingDist[1]);
+                $mean = (float)(($RatingDist[5] * 5 + $RatingDist[4] * 4 + $RatingDist[3] * 3 + $RatingDist[2] * 2 + $RatingDist[1] * 1) / $nRating);
         
-        foreach ($Ratings as $title => $ArrayRatings) {
-            $R5 = count($ArrayRatings[5]);
-            $R4 = count($ArrayRatings[4]);
-            $R3 = count($ArrayRatings[3]);
-            $R2 = count($ArrayRatings[2]);
-            $R1 = count($ArrayRatings[1]);
-            $nRating = $R1 + $R2 + $R3 + $R4 + $R5;
-
-            $mean = (float)(($R5 * 5 + $R4 * 4 + $R3 * 3 + $R2 * 2 + $R1 * 1) / $nRating);
-        
-           printf($width, $title, $nRating, $R5, $R4, $R3, $R2, $R1, $mean);
+            printf($width, $title, $nRating, $RatingDist[5], $RatingDist[4], $RatingDist[3], $RatingDist[2], $RatingDist[1], $mean);
         }
         echo "|________________________________|__________|__________|__________|__________|__________|__________|__________|" . PHP_EOL;
+        // $this->Ratings = $Ratings;
     }
 
     public function displayMonthRatings($excersise)
-    {   $excersise;
+    {   $excersise = (string)$excersise;
         $Ratings = $this->Ratings;
+        $ExRating = $Ratings[$excersise];
 
-        echo "Overview monthly ratings " . $excersise . PHP_EOL;
-        $width = "| %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s |\n";
-        echo "-------------------------------------------------------------------------------------------" . PHP_EOL;
-        printf($width, "month", "total", "5 star", "4 star", "3 star", "2 star", "1 star", "rating mean");
-        echo "-------------------------------------------------------------------------------------------" . PHP_EOL;
-        foreach ($Ratings as $title => $ArrayRatings) {
-            $month = $ArrayRatings['month'];
-            $R5 = count($ArrayRatings[5]);
-            $R4 = count($ArrayRatings[4]);
-            $R3 = count($ArrayRatings[3]);
-            $R2 = count($ArrayRatings[2]);
-            $R1 = count($ArrayRatings[1]);
-            $nRating = $R1 + $R2 + $R3 + $R4 + $R5;
-
-            $mean = (float)(($R5 * 5 + $R4 * 4 + $R3 * 3 + $R2 * 2 + $R1 * 1) / $nRating);
+        $Rjan = [];
+        $Rfeb = [];
+        $Rmar = [];
+        $Rapr = [];
+        $Rmay = [];
+        $Rjun = [];
+        $Rjul = [];
+        $Raug = [];
+        $Rsep = [];
+        $Roct = [];
+        $Rnov = [];
+        $Rdec = [];
         
-           printf($width, $month, $nRating, $R5, $R4, $R3, $R2, $R1, $mean);
+         for ($i = 0; $i < count($ExRating) - 1; $i++) {;
+            if(!is_numeric($ExRating[$i])) {
+                $month = $ExRating[$i];
+                $R = $ExRating[$i - 1];
+
+               if ($month == 'Jan') {
+                    array_push($Rjan, $R);
+                } elseif ($month == 'Feb')  {
+                    array_push($Rfeb, $R);
+                } elseif ($month == 'Mar')  {
+                    array_push($Rmar, $R);
+                } elseif ($month == 'Apr')  {
+                    array_push($Rapr, $R);
+                } elseif ($month == 'May')  {
+                    array_push($Rmay, $R);
+                } elseif ($month == 'Jun')  {
+                    array_push($Rjun, $R);
+                } elseif ($month == 'Jul')  {
+                    array_push($Rjul, $R);
+                } elseif ($month == 'Aug')  {
+                    array_push($Raug, $R);
+                } elseif ($month == 'Sep')  {
+                    array_push($Rsep, $R);
+                } elseif ($month == 'Oct')  {
+                    array_push($Roct, $R);
+                } elseif ($month == 'Nov')  {
+                    array_push($Rnov, $R);
+                } elseif ($month == 'Dec')  {
+                    array_push($Rdec, $R);
+                }
+
+            }
+            $DistMonth = [
+                'Januari' => $Rjan,
+                'Februari' => $Rfeb,
+                'Maart' => $Rmar,
+                'April' => $Rapr,
+                'Mei' => $Rmay,
+                'Juni' => $Rjun,
+                'Juli' => $Rjul,
+                'Augustus' => $Raug,
+                'September' => $Rsep,
+                'Oktober' => $Roct,
+                'November' => $Rnov,
+                'December' => $Rdec,
+            ];  
         }
-        echo "|________________________________|__________|__________|__________|__________|__________|__________|__________|" . PHP_EOL;
-    }
-    
 
-}
+        echo "\n Overview monthly ratings " . $excersise . PHP_EOL;
+        $width = "| %-10.10s  | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-10.8s |\n";
+        echo "----------------------------------------------------------------------------------------------" . PHP_EOL;
+        printf($width, "month", "total", "5 star", "4 star", "3 star", "2 star", "1 star", "mean");
+        echo "----------------------------------------------------------------------------------------------" . PHP_EOL;
 
+        foreach ($DistMonth as $month => $val) {
+            $RMdist = array_count_values($val);
+            if (empty($RMdist[5])) {
+                $RM5 = 0;
+            } else {
+              $RM5 = $RMdist[5];  
+            }
+            if (empty($RMdist[4])) {
+                $RM4 = 0;
+            } else {
+              $RM4 = $RMdist[4];  
+            }
+            if (empty($RMdist[3])) {
+                $RM3 = 0;
+            } else {
+              $RM3 = $RMdist[3];  
+            }
+            if (empty($RMdist[2])) {
+                $RM2 = 0;
+            } else {
+              $RM2 = $RMdist[2];  
+            }
+            if (empty($RMdist[1])) {
+                $RM1 = 0;
+            } else {
+              $RM1 = $RMdist[1];  
+            }
+           
+            $nRating = count($val);
+            $mean = (float)(($RM5 * 5 + $RM4 * 4 +  $RM3 * 3 +  $RM2 * 2 +  $RM1 * 1) / $nRating);
         
+           printf($width, $month, $nRating, $RM5, $RM4, $RM3, $RM2, $RM1, $mean);
+        }
+        echo "|_____________|__________|__________|__________|__________|__________|__________|____________|" . PHP_EOL;
+    }
+}

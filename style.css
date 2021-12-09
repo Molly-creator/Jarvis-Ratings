@@ -1,1 +1,34 @@
-.
+:root 
+
+* {
+    margin: 0;
+}
+#logo p{
+    font-weight: 500;
+}
+#logo span {
+    text-transform: uppercase;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    color:honeydew;
+    font-size: 18px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap:25px;
+    text-decoration: none;
+    background-color: gold;
+    color: navy;
+}
+
+body section {
+    display: flex;
+    flex-direction: column;
+    background-color: navy;
+    flex-grow: 1;
+}
