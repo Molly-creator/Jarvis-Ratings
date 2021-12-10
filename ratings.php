@@ -1,16 +1,12 @@
 <?php
-
 require('./ExerciseDashboard.php');
-// require('./test.php');
 
+// Open en read CSV file
 $file = './ratings.csv';
 $Bitdata = [];
 $file = fopen($file, 'r');
 
-if ($file === false) {
-    die('Er gaat iets mis met' . $file);
-}
-
+// Loop through CSV file and append rows to array
 $file = fopen("./ratings.csv","r");
 while(! feof($file))
   {
@@ -18,27 +14,36 @@ while(! feof($file))
     array_push($Bitdata, $data);
   }
 
+$Flex_Pre = [];
+$Flex_Post = [];
+
+for ($i = 1; $i < count($Bitdata); $i++) {
+    if ($Bitdata[$i][0] == 'Flex met boxen') {
+        $rating = (int)$Bitdata[$i][3];
+        $Parsedate = strtotime($Bitdata[$i][4]);
+        $datum = date("d m Y", $Parsedate);
+
+        // echo substr($datum, 5) . PHP_EOL;
+        // echo substr($datum, 0, -4) . PHP_EOL;
+        
+        if (substr($datum, 0, -4) > 3 && substr($datum,6) == 2021) {
+            //  echo $datum . PHP_EOL;
+
+        }
+    }
+}
+//Close file
 fclose($file);
 
-$ExerciseTitle = [];
-for ($i = 1; $i < count($Bitdata); $i++) {
-    array_push($ExerciseTitle, $Bitdata[$i][0]);
-}
-
-// $UniqueExercises = array_unique($ExerciseTitle);
-// echo "Er zijn " . count($UniqueExercises) . " opdrachten in de Jarvis dataset : " . PHP_EOL;
-// foreach ($UniqueExercises as $title) {
-//     echo $title . PHP_EOL;
-// }
-
+// New object for each exercise in dataset 
 $Ex1 = new Exercise('Flex met boxen');
 $Ex2 = new Exercise('Commandline commands');
 $Ex3 = new Exercise('Read that data');
 $Ex4 = new Exercise('Maak een kattenwebsite');
 $Ex5 = new Exercise('Hover kan je gaan');
 
-
-
+// Loop through dataset, select column 3 and 4.
+// Add data (columns) to object
 for ($i = 1; $i < count($Bitdata); $i++) {
     if ($Bitdata[$i][0] == 'Flex met boxen') {
         $Ex1->AddRatings((int)$Bitdata[$i][3]);
@@ -57,14 +62,31 @@ for ($i = 1; $i < count($Bitdata); $i++) {
         $Ex5->Ratingdate($Bitdata[$i][4]);
     }
 }
-
+//New object
 $DashBoard = new DashBoard([$Ex1, $Ex2, $Ex3, $Ex4, $Ex5]);
 
+$Flex_Pre = [];
+$Flex_Post = [];
 
-$DashBoard ->showDashboard();
-$DashBoard ->displayMonthRatings('Flex met boxen');
-$DashBoard ->displayMonthRatings('Commandline commands');
-$DashBoard ->displayMonthRatings('Read that data');
-$DashBoard ->displayMonthRatings('Maak een kattenwebsite');
-$DashBoard ->displayMonthRatings('Hover kan je gaan');
+for ($i = 1; $i < count($Bitdata); $i++) {
+    if ($Bitdata[$i][0] == 'Flex met boxen') {
+        $rating = (int)$Bitdata[$i][3];
+        $Parsedate = strtotime($Bitdata[$i][4]);
+        $Fulldatum = date("d m Y", $Parsedate);
+        $month = date("m", $Parsedate);
+        $year = date("Y", $Parsedate);
 
+        if ($month < 4 && $year == 2021) {
+            array_push($Flex_Pre, $rating);
+        } elseif ($month > 3 && $year == 2021) {
+            array_push($Flex_Post, $rating);
+       }
+    }
+}
+
+$FlexPostN = count($Flex_Post);
+$FlexPostSum = array_sum($Flex_Post);
+$FlexPostMean = round(($FlexPostSum/$FlexPostN),2);
+$FlexPreN  = count($Flex_Pre);
+$FlexPreSum = array_sum($Flex_Pre);
+$FlexPreMean = round(($FlexPreSum/$FlexPreN),2);

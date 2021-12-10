@@ -38,23 +38,22 @@ class DashBoard
 
     public function showDashboard()
     {   
-        $Ratings = $this->Ratings;  
+        $Ratings = $this->Ratings;
 
-        echo "\n Dashboard ratings Bit Academy excersises" . PHP_EOL;
-        $width = "| %-30.30s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.8s |\n";
-        echo "---------------------------------------------------------------------------------------------------------------" . PHP_EOL;
-        printf($width, "title", "total", "5 star", "4 star", "3 star", "2 star", "1 star", "mean");
-        echo "---------------------------------------------------------------------------------------------------------------" . PHP_EOL;
-       
+        echo "<table>"; 
+        echo "<tr><th>Dashboard ratings Bit Academy excersises</th></tr>" . PHP_EOL;
+        echo "<tr><th>title</th><th>total</th><th>5 star</th><th>4 star</th><th>3 star</th><th>2 star</th><th>1 star</th><th>mean</th><tr>";       
         foreach ($Ratings as $title => $x) {
             
                 $RatingDist = array_count_values($x);
                 $nRating = ($RatingDist[5]  + $RatingDist[4] + $RatingDist[3]  + $RatingDist[2]  + $RatingDist[1]);
-                $mean = (float)(($RatingDist[5] * 5 + $RatingDist[4] * 4 + $RatingDist[3] * 3 + $RatingDist[2] * 2 + $RatingDist[1] * 1) / $nRating);
+                $mean = round((float)(($RatingDist[5] * 5 + $RatingDist[4] * 4 + $RatingDist[3] * 3 + $RatingDist[2] * 2 + $RatingDist[1] * 1) / $nRating), 2);
+
         
-            printf($width, $title, $nRating, $RatingDist[5], $RatingDist[4], $RatingDist[3], $RatingDist[2], $RatingDist[1], $mean);
+        echo "<tr><td>$title</td><td>$nRating</td><td>$RatingDist[5]</td><td>$RatingDist[4]</td><td>$RatingDist[3]</td><td>$RatingDist[2]</td><td>$RatingDist[1]</td><td>$mean</td></tr>";
         }
-        echo "|________________________________|__________|__________|__________|__________|__________|__________|__________|" . PHP_EOL;
+        echo "</table>";
+
         // $this->Ratings = $Ratings;
     }
 
@@ -109,26 +108,24 @@ class DashBoard
 
             }
             $DistMonth = [
-                'Januari' => $Rjan,
-                'Februari' => $Rfeb,
-                'Maart' => $Rmar,
-                'April' => $Rapr,
-                'Mei' => $Rmay,
-                'Juni' => $Rjun,
-                'Juli' => $Rjul,
-                'Augustus' => $Raug,
-                'September' => $Rsep,
-                'Oktober' => $Roct,
-                'November' => $Rnov,
-                'December' => $Rdec,
+                'januari' => $Rjan,
+                'februari' => $Rfeb,
+                'maart' => $Rmar,
+                'april' => $Rapr,
+                'mei' => $Rmay,
+                'juni' => $Rjun,
+                'juli' => $Rjul,
+                'augustus' => $Raug,
+                'september' => $Rsep,
+                'oktober' => $Roct,
+                'november' => $Rnov,
+                'december' => $Rdec,
             ];  
         }
+        echo "<table>"; 
+        echo "<tr><th>Dashboard monthly ratings <span>$excersise</span></th></tr>". PHP_EOL;
+        echo "<tr><th>month</th><th>total</th><th>5 star</th><th>4 star</th><th>3 star</th><th>2 star</th><th>1 star</th><th>mean</th><tr>";    
 
-        echo "\n Overview monthly ratings " . $excersise . PHP_EOL;
-        $width = "| %-10.10s  | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-8.10s | %-10.8s |\n";
-        echo "----------------------------------------------------------------------------------------------" . PHP_EOL;
-        printf($width, "month", "total", "5 star", "4 star", "3 star", "2 star", "1 star", "mean");
-        echo "----------------------------------------------------------------------------------------------" . PHP_EOL;
 
         foreach ($DistMonth as $month => $val) {
             $RMdist = array_count_values($val);
@@ -159,10 +156,10 @@ class DashBoard
             }
            
             $nRating = count($val);
-            $mean = (float)(($RM5 * 5 + $RM4 * 4 +  $RM3 * 3 +  $RM2 * 2 +  $RM1 * 1) / $nRating);
+            $mean = round((float)(($RM5 * 5 + $RM4 * 4 +  $RM3 * 3 +  $RM2 * 2 +  $RM1 * 1) / $nRating), 2);
         
-           printf($width, $month, $nRating, $RM5, $RM4, $RM3, $RM2, $RM1, $mean);
+           echo "<tr><td>$month</td><td>$nRating</td><td>$RM5</td><td>$RM4</td><td> $RM3</td><td>$RM2</td><td>$RM1</td><td>$mean</td></tr>";
         }
-        echo "|_____________|__________|__________|__________|__________|__________|__________|____________|" . PHP_EOL;
+        echo "</table>"; 
     }
 }
