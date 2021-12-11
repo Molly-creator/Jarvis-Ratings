@@ -84,6 +84,7 @@ for ($i = 1; $i < count($Bitdata); $i++) {
     }
 }
 
+//Addition statistics Flex met boxen exercise
 $FlexPostN = count($Flex_Post);
 $FlexPostSum = array_sum($Flex_Post);
 $FlexPostMean = round(($FlexPostSum/$FlexPostN),2);

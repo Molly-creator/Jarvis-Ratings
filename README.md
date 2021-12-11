@@ -1,5 +1,6 @@
 Repository for community challinge Bit-Academy.
 
+
 # Jarvis Ratings
 
 Bit Academy wil zijn Jarvis opdrachten gaan verbeteren om te zorgen voor een betere leeromgeving. Op basis van de feedback van studenten gaan we kijken welke opdrachten wel en niet herzien moeten worden.

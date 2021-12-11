@@ -27,10 +27,9 @@ require('./ratings.php');
         </ul>
     </nav>
     <div class="container">
-        <h1>Jarvis Ratings</h1>
-        <section class="home">
+
+        <section id="home">
             <h2>Intro</h2>
-            <h3>Hoeveel ratings zijn er totaal gegeven?</h3>
             <p>De <span>Community Challenge</span> van deze week gaat over de gebruikers beoordelingen van opdrachten uit Jarvis. Aangeleverd is een groot CSV bestand met ratings van een onbekend aantal opdrachten en hoeveelheid. Dit is een prima bestandstype om data in op slaan maar niet om deze te analyseren! Daarvoor zal ik eerst het CSV bestand omzetten naar een PHP array. Met handig gebruik van de php functie ```count``` is snel vast te stellen dat in de dataset
                 <?php echo count($Bitdata) - 1; ?> beoordelingen aanwezig zijn. Vervolgens wil ik weten over welke opdrachten rating beschikbaar zijn.
             </p>
@@ -42,19 +41,23 @@ require('./ratings.php');
                 }
                 $UniqueExercises = array_unique($ExerciseTitle);
                 echo "Er zijn " . count($UniqueExercises) . " opdrachten in de Jarvis dataset: ";
+                ?><table id="exercises">
+                    <tr><td>Titel opdracht</td></tr>
+                <?php
                 foreach ($UniqueExercises as $title) {
-                    echo "<br>$title";
-                };
+                    echo "<tr><td>$title</td></tr>";
+                }
                 ?>
+                </table>
                 <br><br>Nu we deze basis informatie tot onze beschikken hebben gaan we verder kijken naar de daadwerkelijke ratings van de opdrachten.
             </p>
         </section>
 
-        <section class="rating">
+        <section id="rating">
 
             <h2>Ratings</h2>
             <h3>Overzicht van de gebruikers beoordelingen</h3>
-            <p>Aan de achterkant van deze webpagina draait een php script. Hierin wordt de data in een object geladen. Door gebruik te maken van (associatieve) arrays is onderstaande tabel gevuld met de gegevens van Jarvis. De gegevens zijn verzameld van de vijf opdrachten. De meeste ratings zijn gegevens van de opdracht “Hover kan je gaan” en van de opdracht “Flex met boxen” zijn de minste beoordelingen. Deze twee opdrachten hebben daarnaast gemeen dat “Hover kan je gaan” de meeste 1-ster ratings heeft gekregen en ‘Flex met boxen de minste. Wat bovendien uit het oog springt is dat “Flex met boxen” bijzonder veel 5-sterren heeft gekregen. Het is daarom ook niet verbazend dat het gemiddelde ook hoger is bij deze opdracht. Over het algemeen liggen de waardes van de verschillende opdrachten bij elkaar, zo rond de 30 - 40 aantal per ster. </p>
+            <p>Aan de achterkant van deze webpagina draait een php script. Hierin wordt de data in een object geladen. Door gebruik te maken van (associatieve) arrays is onderstaande tabel gevuld met de data van de vijf opdrachten. De meeste ratings zijn van de opdracht “Hover kan je gaan” en van de opdracht “Flex met boxen” zijn de minste beoordelingen. Deze twee opdrachten hebben daarnaast gemeen dat “Hover kan je gaan” de meeste 1-ster ratings heeft gekregen en ‘Flex met boxen de minste. Wat bovendien uit het oog springt is dat “Flex met boxen” bijzonder veel 5-sterren heeft gekregen. Het is daarom ook niet verbazend dat het gemiddelde ook hoger is bij deze opdracht. Over het algemeen liggen de waardes van de verschillende opdrachten bij elkaar, zo rond de 30 - 40 aantal per ster. </p>
             <h3>Laag beoordeelde opdrachten</h3>
             <p>Er zijn twee opdrachten met een gemiddelde dat lager ligt dan 3. Dit zijn <span>“Read that data”</span> ” met een gemiddelde van 2.92.
                 en <span>“Maak een kattenwebsite”</span> met een gemiddelde van 2.99.</p>
@@ -108,29 +111,28 @@ require('./ratings.php');
             </div>
 
         </section>
-        <section class="herzien">
+        <section id="herzien">
             <h2>Reden tot voor verbetering</h2>
-            <p>Op 1 mei 2021 is de opdracht Flex met boxen herzien, heeft dat geleid tot betere ratings?
+            <p>Op 1 mei 2021 is de opdracht <span>"Flex met boxen"</span> herzien, heeft dat geleid tot betere ratings?
                 Door de gegevens van de opdrachten te filteren op de specifieke opdracht <span>"Flex met boxen"</span> en de datum zijn er twee arrays ontstaan. Een de gemiddeldes van voor 1 mei 2021 en een met de ratings van erna. Hieronder zie je een tabel met daarin een kolom voor de n-waarde. Dit is het aantal beoordelingen. En het totaal, dat de som van alle ratings is. Hiermee is het gemiddelde uit te rekenen.
                 Voor de herziening van de opdracht was het gemiddelde <span>2,74</span> en na de wijziging was het gemiddelde <span>4,27</span>.
                 In het geval van deze opdracht heeft het veranderen van de opdracht het gemiddelde flink doen toenemen. Regelmatig de beoordelingen van de gebruikers analyseren is van belang om goed in te kunnen spelen op de gebruikerservaring.
             </p>
 
             <?php
-
             echo "<table>";
-            echo "<tr><th></th><td>N-value</td><td>Total</td><td>Mean</td></th>";
-            echo "<tr><th>Voor 3 mei</th><td>$FlexPreN</td><td>$FlexPreSum</td><td>$FlexPreMean</td></tr>";
-            echo "<tr><th>Na 3 mei</th><td>$FlexPostN</td><td>$FlexPostSum</td><td>$FlexPostMean</td></tr>";
+            echo "<tr><td></td><td>N-value</td><td>Total</td><td>Mean</td></tr>";
+            echo "<tr><td>PRE</td><td>$FlexPreN</td><td>$FlexPreSum</td><td>$FlexPreMean</td></tr>";
+            echo "<tr><td>POST</td><td>$FlexPostN</td><td>$FlexPostSum</td><td>$FlexPostMean</td></tr>";
             echo "</table>";
             ?>
 
         </section>
     </div>
-    <footer>
+    
+</body>
+<footer>
         <img src="./icons8-github-24.png" alt="GitHub cat-icon"><li><a href="https://github.com/Molly-creator/Jarvis-Ratings">Git</a></li>
         <span>Dorian van Buel</span>
     </footer>
-</body>
-
 </html>

@@ -42,7 +42,7 @@ class DashBoard
 
         echo "<table>"; 
         echo "<tr><th>Dashboard ratings Bit Academy excersises</th></tr>" . PHP_EOL;
-        echo "<tr><th>title</th><th>total</th><th>5 star</th><th>4 star</th><th>3 star</th><th>2 star</th><th>1 star</th><th>mean</th><tr>";       
+        echo "<tr><td>title</td><td>total</td><td>5 star</td><td>4 star</td><td>3 star</td><td>2 star</td><td>1 star</td><td>mean</td><tr>";       
         foreach ($Ratings as $title => $x) {
             
                 $RatingDist = array_count_values($x);
@@ -124,8 +124,7 @@ class DashBoard
         }
         echo "<table>"; 
         echo "<tr><th>Dashboard monthly ratings <span>$excersise</span></th></tr>". PHP_EOL;
-        echo "<tr><th>month</th><th>total</th><th>5 star</th><th>4 star</th><th>3 star</th><th>2 star</th><th>1 star</th><th>mean</th><tr>";    
-
+        echo "<tr><td>month</td><td>total</td><td>5 star</td><td>4 star</td><td>3 star</td><td>2 star</td><td>1 star</td><td>mean</td><tr>";
 
         foreach ($DistMonth as $month => $val) {
             $RMdist = array_count_values($val);
