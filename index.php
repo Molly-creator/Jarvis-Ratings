@@ -13,8 +13,7 @@
 
 <?php
 require('./ratings.php');
-
-
+$star = "<span id='star' class='material-icons'>&#xe838;</span>";
 ?>
 
 <body>
@@ -26,19 +25,25 @@ require('./ratings.php');
                         <h1 id="logo">community<span>challenge</span>
                     </a></h1>
                 </li>
-                <li><a href="#home">1 <span id='star' class='material-icons'>&#xe838;</span></a></li>
-                <li><a href="#rating">2 <span id='star' class='material-icons'>&#xe838;</span></a></li>
-                <li><a href="#herzien">3 <span id='star' class='material-icons'>&#xe838;</span></a></li>
+                <li><a href="#home">Introduction</a></li>
+                <li><a href="#rating">Dashboards</a></li>
+                <li><a href="#herzien">Improvements</a></li>
             </ul>
         </nav>
     </div>
     <div class="container">
-
+    
         <section id="home">
-            <h2>Intro</h2>
-            <p>De <span>Community Challenge</span> van deze week gaat over de gebruikers beoordelingen van opdrachten uit Jarvis. Aangeleverd is een groot CSV bestand met ratings van een onbekend aantal opdrachten en hoeveelheid. Dit is een prima bestandstype om data in op slaan maar niet om deze te analyseren! Daarvoor zal ik eerst het CSV bestand omzetten naar een PHP array. Met handig gebruik van de php functie ```count``` is snel vast te stellen dat in de dataset
-                <?php echo count($Bitdata) - 1; ?> beoordelingen aanwezig zijn. Vervolgens wil ik weten over welke opdrachten rating beschikbaar zijn.
-            </p>
+            
+            <h2><?php echo $star; ?>Introduction<?php echo $star; ?></h2>
+            <h3>User ratings put to use</h3>
+            <p>The <span>Community Challenge</span> from Bit-Academy dives deep into the user experience.
+                Learning to code is made fun and productive in the Jarvis Universe where there are a variaty of exercises!
+                To improve .... exercise ratings ... CSV-file to PHP object... Dashboard
+               </p><p>
+                <br>Data-points: <span><?php echo count($Bitdata) - 1; ?></span>
+             </p>
+            
             <p>
                 <?php
                 $ExerciseTitle = [];
@@ -46,11 +51,11 @@ require('./ratings.php');
                     array_push($ExerciseTitle, $Bitdata[$i][0]);
                 }
                 $UniqueExercises = array_unique($ExerciseTitle);
-                echo "Er zijn " . count($UniqueExercises) . " opdrachten in de Jarvis dataset: ";
+                echo "There are " . count($UniqueExercises) . " exercises in dataset: ";
                 ?>
             <table id="exercises">
                 <tr>
-                    <td>Titel opdracht</td>
+                    <th>Title exercise</th>
                 </tr>
                 <?php
                 foreach ($UniqueExercises as $title) {
@@ -58,19 +63,18 @@ require('./ratings.php');
                 };
                 ?>
             </table>
-            <br><br>Nu we deze basis informatie tot onze beschikken hebben gaan we verder kijken naar de daadwerkelijke ratings van de opdrachten.
+
+            <p>
+
             </p>
         </section>
 
         <section id="rating">
 
-            <h2>Ratings</h2>
-            <h3>Overzicht van de gebruikers beoordelingen</h3>
-            <p>Aan de achterkant van deze webpagina draait een php script. Hierin wordt de data in een object geladen. Door gebruik te maken van (associatieve) arrays is onderstaande tabel gevuld met de data van de vijf opdrachten. De meeste ratings zijn van de opdracht “Hover kan je gaan” en van de opdracht “Flex met boxen” zijn de minste beoordelingen. Deze twee opdrachten hebben daarnaast gemeen dat “Hover kan je gaan” de meeste 1-ster ratings heeft gekregen en ‘Flex met boxen de minste. Wat bovendien uit het oog springt is dat “Flex met boxen” bijzonder veel 5-sterren heeft gekregen. Het is daarom ook niet verbazend dat het gemiddelde ook hoger is bij deze opdracht. Over het algemeen liggen de waardes van de verschillende opdrachten bij elkaar, zo rond de 30 - 40 aantal per ster. </p>
-            <h3>Laag beoordeelde opdrachten</h3>
-            <p>Er zijn twee opdrachten met een gemiddelde dat lager ligt dan 3. Dit zijn <span>“Read that data”</span> ” met een gemiddelde van 2.92.
-                en <span>“Maak een kattenwebsite”</span> met een gemiddelde van 2.99.</p>
-
+            <h2><?php echo"$star$star";?>Ratings<?php echo"$star$star";?></h2>
+            <h3>Dashboard exercise rating</h3>
+            <p>Object generates dashboard below.</p>
+            <p>
 
             <div class="OverviewTable">
                 <?php
@@ -83,9 +87,9 @@ require('./ratings.php');
 
         </section>
         <section>
-            <h3>Overzicht per opdracht</h3>
+            <h3>Dashboard monthly rating distribution</h3>
             <form method="post">
-                <label for="ExerciseRatings">Selecteer een opdracht</label>
+                <label for="ExerciseRatings">Select exercise</label>
                 <select name="ExerciseRatings" id="ExerciseRatings">
                     <option value="" disabled selected hidden>Maak een keuze</option>
                     <option value="FlexBox">Flex met boxen</option>
@@ -94,14 +98,17 @@ require('./ratings.php');
                     <option value="KattenWeb">Maak een kattenwebsite</option>
                     <option value="Hover">Hover kan je gaan</option>
                 </select>
-                <input type="submit" name="submit" value="Laad overzicht"></input>
+                <label for="ExerciseRatings">Select year</label>
+                <select name="ExerciseRatings" id="ExerciseRatings">
+                    <option value="" disabled selected hidden>Maak een keuze</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                
+                </select>
+                
+                <input type="submit" name="submit" value="Load"></input>
             </form>
 
-
-            <h3>Opdracht tabel</h3>
-            <p>Door de dataset nog verder te filteren is de informatie om te zetten naar een overzichtstabel van de opdrachten afzonderlijk.
-                Hierin is te zien hoe de beoordelingen over de maanden is verdeeld.
-            </p>
             <div class="MonthTable">
                 <?php
 
@@ -125,11 +132,10 @@ require('./ratings.php');
         </section>
         <section id="herzien">
 
-            <h2>Reden tot voor verbetering</h2>
-            <p>Op 1 mei 2021 is de opdracht <span>"Flex met boxen"</span> herzien, heeft dat geleid tot betere ratings?
-                Door de gegevens van de opdrachten te filteren op de specifieke opdracht <span>"Flex met boxen"</span> en de datum zijn er twee arrays ontstaan. Een de gemiddeldes van voor 1 mei 2021 en een met de ratings van erna. Hieronder zie je een tabel met daarin een kolom voor de n-waarde. Dit is het aantal beoordelingen. En het totaal, dat de som van alle ratings is. Hiermee is het gemiddelde uit te rekenen.
-                Voor de herziening van de opdracht was het gemiddelde <span>2,78</span> en na de wijziging was het gemiddelde <span>4,44</span>.
-                In het geval van deze opdracht heeft het veranderen van de opdracht het gemiddelde flink doen toenemen. Regelmatig de beoordelingen van de gebruikers analyseren is van belang om goed in te kunnen spelen op de gebruikerservaring.
+            <h2><?php echo "$star $star $star";?>Improving rates<?php echo "$star $star $star";?></h2>
+            <p>On May 1 2021 the exercise <span>"Flex met boxen"</span> was revised. This greatly impacted user ratings.
+            Below an table with informations (n-count, total amount, mean) from before may 1 2021 and after this date. The barplot to illustrate the distribution of ratings given.
+       
             </p>
 
             <table id="tbl-PrePost">
@@ -173,24 +179,24 @@ require('./ratings.php');
                             legendMarkerColor: "#6b87e8",
                             name: "Voor 1 mei",
                             dataPoints: [{
-                                    y: <?php echo (empty($FlexPreDist[5])) ? 0 : ($FlexPreDist[5]); ?>,
-                                    label: "5"
-                                },
-                                {
-                                    y: <?php echo (empty($FlexPreDist[4])) ? 0 : ($FlexPreDist[4]); ?>,
-                                    label: "4"
-                                },
-                                {
-                                    y: <?php echo (empty($FlexPreDist[3])) ? 0 : ($FlexPreDist[3]); ?>,
-                                    label: "3"
+                                    y: <?php echo (empty($FlexPreDist[1])) ? 0 : ($FlexPreDist[1]); ?>,
+                                    label: "1"
                                 },
                                 {
                                     y: <?php echo (empty($FlexPreDist[2])) ? 0 : ($FlexPreDist[2]); ?>,
                                     label: "2"
                                 },
                                 {
-                                    y: <?php echo (empty($FlexPreDist[1])) ? 0 : ($FlexPreDist[1]); ?>,
-                                    label: "1"
+                                    y: <?php echo (empty($FlexPreDist[3])) ? 0 : ($FlexPreDist[3]); ?>,
+                                    label: "3"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPreDist[4])) ? 0 : ($FlexPreDist[4]); ?>,
+                                    label: "4"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPreDist[5])) ? 0 : ($FlexPreDist[5]); ?>,
+                                    label: "5"
                                 }
                             ]
                         }, {
@@ -200,24 +206,24 @@ require('./ratings.php');
                             legendMarkerColor: "mediumaquamarine",
                             name: "Na 1 mei",
                             dataPoints: [{
-                                    y: <?php echo (empty($FlexPostDist[5])) ? 0 : ($FlexPostDist[5]); ?>,
-                                    label: "5"
-                                },
-                                {
-                                    y: <?php echo (empty($FlexPostDist[4])) ? 0 : ($FlexPostDist[4]); ?>,
-                                    label: "4"
-                                },
-                                {
-                                    y: <?php echo (empty($FlexPostDist[3])) ? 0 : ($FlexPostDist[3]); ?>,
-                                    label: "3"
+                                    y: <?php echo (empty($FlexPostDist[1])) ? 0 : ($FlexPostDist[1]); ?>,
+                                    label: "1"
                                 },
                                 {
                                     y: <?php echo (empty($FlexPostDist[2])) ? 0 : ($FlexPostDist[2]); ?>,
                                     label: "2"
                                 },
                                 {
-                                    y: <?php echo (empty($FlexPostDist[1])) ? 0 : ($FlexPostDist[1]); ?>,
-                                    label: "1"
+                                    y: <?php echo (empty($FlexPostDist[3])) ? 0 : ($FlexPostDist[3]); ?>,
+                                    label: "3"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPostDist[4])) ? 0 : ($FlexPostDist[4]); ?>,
+                                    label: "4"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPostDist[5])) ? 0 : ($FlexPostDist[5]); ?>,
+                                    label: "5"
                                 }
                             ]
                         }]
@@ -238,8 +244,8 @@ require('./ratings.php');
 <div class="footerbar">
     <footer>
         <ul>
-            <img src="./icons8-github-24.png" alt="GitHub cat-icon">
-            <li><a href="https://github.com/Molly-creator/Jarvis-Ratings">git</a></li>
+            
+            <li><a href="https://github.com/Molly-creator/Jarvis-Ratings"><img src="./icons8-github-24.png" alt="GitHub cat-icon">git</a></li>
             <span>Dorian van Buel</span>
         </ul>
 </div>

@@ -63,25 +63,28 @@ nav ul li:not(:first-child) {
     list-style: none;
     font-size: larger;
     font-weight: 500;
-    box-sizing: border-box;
-    width:50px;
-    padding: 6px 10px;
-    text-align: center;
+    box-sizing:content-box;
+    width:150px;
     border-radius: 5px;
     text-transform: lowercase;
     color: var(--nav-color);
+    display: flex;
+    
 }
 
 nav a {
     text-decoration: none;
     color: var(--text-color);
     display:flex;
+    justify-self: center;
+    padding: 0px 20px 0px 20px;
 }
 nav a:visited {
     text-decoration: none;
     color: var(--text-color)
 }
-nav ul li a:hover  {
+nav a:hover  {
+ 
     border-color: #ccc;
     border-radius: 5px;
     background-color: var(--text-color);
@@ -90,16 +93,17 @@ nav ul li a:hover  {
 
 #logo {
     position: absolute;
-    left: 40px;
+    left: 20px;
     top: 10px;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 1em;
     text-transform: lowercase;
+    vertical-align: bottom;
 }
 
 #logo span {
     font-weight: bolder;
-    font-size: 14px;
+    font-size: .8em;
     text-transform: uppercase;
 }
 
@@ -112,15 +116,40 @@ nav ul li a:hover  {
 section {
     display: flex;
     flex-direction: column;
-    min-height:400px;
-    margin-bottom: 30px;
+    min-height: fit-content;
+    padding-bottom: 3em;
     height: fit-content;
     color:var(--text-color);
-    padding:20px;
+    padding: 20px;
+    /* justify-content: center; */
+    align-items: center;
+   
+}
+
+section h2 {
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color);
+    text-align: center;
+}
+
+section h2 span {
+    color: var(--nav-li);
+}
+
+section h3 {
+    border-bottom: var(--nav-color) 5px solid;
+    margin: 30px 0px 30px 0px;
+    align-self:flex-start
 }
 
 span {
     font-weight: 600;
+}
+
+section p {
+    align-self:flex-start
 }
 /* Tables */
 table {
@@ -129,8 +158,8 @@ table {
     justify-content: flex-start;
     align-items: center;
     max-height: fit-content;
-    width: 60vw;
-    max-width: fit-content;
+    flex-grow: 1;
+    min-width: fit-content;
     padding: 1px 5px 5px 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -211,9 +240,10 @@ table tr:nth-child(odd):not(:first-child) {
     min-width: 500px;
 }
 
-#exercises tr:nth-child(1) {
-    font-weight: 500;
+#exercises tr:first-child {
+    text-transform: uppercase;
 }
+
 #tbl-PrePost {
     height: fit-content;
     width: 50%;
@@ -224,21 +254,34 @@ table #star {
     color: var(--nav-color);
     font-size: 18px;
 }
+img {
+    vertical-align: text-bottom;
+}
 
 /* Form elements */
 form {
     display: flex;
-    gap:30px;
-    margin-bottom: 20px;
+    align-items: center;
+    box-sizing: border-box;
+    gap: 40px;
 }
 select {
-    padding: 8px;
+    padding-left: 5px;
     border-radius: 5px;
-}
+    width: 200px;
+    height: 40px;
+    background-color: var(--table-bg-color);
+    font-size: .8em;
+    color: var(--text-color);;
 
+}
+option {
+    background-color: var(--table-odd-color);
+}
 input {
-    padding:8px;
-    border-color: var(--text-color);
+    width: 200px;
+    height: 40px;
+    border: var(--text-color) 2px solid;
     border-radius: 5px;
     background-color:white;
     color:var(--text-color);
@@ -246,9 +289,11 @@ input {
 }
 
 input:hover {
+    border: var(--nav-color) 1x solid;
     background-color: var(--nav-color);
+    border-radius: 5px;
     color:white;
-    border: none;
+    
 }
 
 section:last-child {
@@ -282,13 +327,17 @@ section:last-child {
 }
 
 footer {
-    height: 40px;
+    height: 50px;
     width:100%;
     position: sticky;
     bottom: 0;
+    display: flex;
+    align-items:center;
+    justify-content: center;
 }
 
-footer ul {
+footer ul,footer li {
+    list-style: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -298,18 +347,18 @@ footer ul {
 footer a {
     text-decoration: none;
 }
+
 footer a:visited{
     text-decoration: none;
     color: var(--text-color)
 }
 
-footer li {
-    list-style: none;
-}
-
-footer li :hover{
+footer  a:hover{
     text-decoration: none;
     color: var(--table-bg-color);
-    padding: 2px;
     border-radius: 5px;
+}
+
+footer a img:hover {
+  filter: invert();
 }
