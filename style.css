@@ -1,12 +1,11 @@
+/* Root and body */
 :root {
     --text-color:rgb(22, 14, 0);
     --table-bg-color:white;
+    --table-odd-color:rgba(158, 60, 60, 0.178);
     --nav-color: rgb(206, 89, 89);
     --nav-li:rgb(158, 60, 60);
     --text-color: #000561;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 20px;
-    line-height: 1.4;
 }
 
 * {
@@ -15,62 +14,84 @@
 }
 
 body {
-    position: relative;
+    background-color: white;
+    max-width: 100vw;
+    min-height: 100vh;
+    font-size: 20px;
+    line-height: 1.4;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    width: 100vw;
-    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .container {
-    background-color: white;
+    width: 70vw;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
-nav{
+
+/* Navigation bar */
+.navbar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+nav {
+    position: relative;
     background-color: var(--nav-color);
+    width: 100vw;
 }
 
 nav ul {
+    list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50px;
-    gap: 30px;
+    gap: 50px;
     color: var(--text-color);
+    background-color: var(--nav-color);
 }
 
-nav ul li {
+nav ul li:not(:first-child) {
+    border-color: #ccc;
     list-style: none;
+    font-size: larger;
+    font-weight: 500;
+    box-sizing: border-box;
+    width:50px;
     padding: 6px 10px;
     text-align: center;
     border-radius: 5px;
-    text-transform: uppercase;
-    background-color: var(--nav-li);
-    
+    text-transform: lowercase;
+    color: var(--nav-color);
 }
 
-h1:nth-child(1) {
-    font-size: 30px;
-}
 nav a {
     text-decoration: none;
-    color: var(--text-color)
+    color: var(--text-color);
+    display:flex;
 }
-nav a:visited{
+nav a:visited {
     text-decoration: none;
     color: var(--text-color)
 }
-nav a:hover {
-    color: white;
+nav ul li a:hover  {
+    border-color: #ccc;
+    border-radius: 5px;
+    background-color: var(--text-color);
+    color: var(--nav-color);
 }
 
 #logo {
     position: absolute;
-    left: 0;
-    padding-left: 20px;
+    left: 40px;
+    top: 10px;
     font-weight: 500;
     font-size: 18px;
     text-transform: lowercase;
@@ -78,43 +99,30 @@ nav a:hover {
 
 #logo span {
     font-weight: bolder;
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
 }
 
+#logo a:hover {
+    color:var(--table-bg-color);
+    background-color: var(--nav-color);
+}
+
+/* Secion and content page*/
 section {
     display: flex;
     flex-direction: column;
     min-height:400px;
-    margin-bottom: 50px;
-    width: 62vw;
+    margin-bottom: 30px;
     height: fit-content;
     color:var(--text-color);
     padding:20px;
-    
 }
-.OverviewTable {
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-.MonthTable {
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-.MonthTable tr:nth-child(2) {
-    text-transform: uppercase;
-}
-.OverviewTable tr:nth-child(2) {
-    text-transform: uppercase;
-}
+
 span {
     font-weight: 600;
 }
-
+/* Tables */
 table {
     margin-top: 10px;
     display: flex;
@@ -123,39 +131,109 @@ table {
     max-height: fit-content;
     width: 60vw;
     max-width: fit-content;
-    padding: 1px;
+    padding: 1px 5px 5px 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    
 }
 
 tr:nth-child(1) {
    text-transform: uppercase;
+   padding:10px 0px 10px 5px;;
 }
 
 tr {
     display: flex;
+    flex-wrap: wrap;
     flex-grow: 1;
     box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.2);
 }
 
 td {
-    min-width: 100px;
-    max-width:fit-content;
+    width: 100px;
     border: var(--nav-color) 2px;
 }
-#exercises tr {
-    text-transform: none;
-    width: 200px;
+
+td:nth-child(1) {
+    min-width: fit-content;
 }
+
+.MonthTable {
+    margin-top: 30px;
+    padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.MonthTable tr:nth-child(2) {
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+}
+
+.MonthTable td:not(:first-child) {
+    text-align: center;
+}
+
+.MonthTable tr:nth-child(odd):not(:first-child) {
+    background-color: var(--table-odd-color);
+}
+
+.OverviewTable {
+    margin-top: 30px;
+    padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+}
+.OverviewTable tr {
+    justify-content: flex-start;
+    align-items: center;
+}
+.OverviewTable tr:nth-child(2) {
+    text-transform: uppercase;
+    text-align: center;
+}
+table tr:nth-child(odd):not(:first-child) {
+    background-color: var(--table-odd-color);
+}
+
+.OverviewTable td:first-child {
+    min-width: 120px;
+    margin-left: .5em;
+    text-align: start;
+}
+
+#exercises {
+    text-transform: none;
+    min-width: 500px;
+}
+#exercises td {
+    min-width: 500px;
+}
+
+#exercises tr:nth-child(1) {
+    font-weight: 500;
+}
+#tbl-PrePost {
+    height: fit-content;
+    width: 50%;
+}
+
+/* Icons main page */
+table #star {
+    color: var(--nav-color);
+    font-size: 18px;
+}
+
+/* Form elements */
 form {
     display: flex;
     gap:30px;
-    flex-grow: 1;
+    margin-bottom: 20px;
 }
 select {
     padding: 8px;
     border-radius: 5px;
-    
 }
 
 input {
@@ -173,18 +251,50 @@ input:hover {
     border: none;
 }
 
-footer {
-    height: 40px;
-    position: sticky;
-    bottom: 0;
+section:last-child {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    bottom: 0;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 50px;
+}
+
+#herzien p, #herzien h2 {
     flex-grow: 1;
+}
+
+#herzien p ~ table{
+    align-self: center;
+}
+
+#chartContainer {
+    padding-top: 30px;
+    height: 300px;
+    width: 300px;
+}
+
+/* Footer */
+.footerbar {
+    display: flex;
+    width: 100%;
     background-color: var(--nav-color);
     color: var(--text-color);
 }
+
+footer {
+    height: 40px;
+    width:100%;
+    position: sticky;
+    bottom: 0;
+}
+
+footer ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
 footer a {
     text-decoration: none;
 }
@@ -195,13 +305,11 @@ footer a:visited{
 
 footer li {
     list-style: none;
-    margin-right: 30px;
 }
 
 footer li :hover{
     text-decoration: none;
-    background-color: var(--nav-li);
+    color: var(--table-bg-color);
     padding: 2px;
     border-radius: 5px;
 }
-

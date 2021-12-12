@@ -34,7 +34,6 @@ class Exercise
     }
     public function getDate()
     {   
-        
         return $this->ratingDate;
     }
 }

@@ -14,24 +14,6 @@ while(! feof($file))
     array_push($Bitdata, $data);
   }
 
-$Flex_Pre = [];
-$Flex_Post = [];
-
-for ($i = 1; $i < count($Bitdata); $i++) {
-    if ($Bitdata[$i][0] == 'Flex met boxen') {
-        $rating = (int)$Bitdata[$i][3];
-        $Parsedate = strtotime($Bitdata[$i][4]);
-        $datum = date("d m Y", $Parsedate);
-
-        // echo substr($datum, 5) . PHP_EOL;
-        // echo substr($datum, 0, -4) . PHP_EOL;
-        
-        if (substr($datum, 0, -4) > 3 && substr($datum,6) == 2021) {
-            //  echo $datum . PHP_EOL;
-
-        }
-    }
-}
 //Close file
 fclose($file);
 
@@ -76,9 +58,9 @@ for ($i = 1; $i < count($Bitdata); $i++) {
         $month = date("m", $Parsedate);
         $year = date("Y", $Parsedate);
 
-        if ($month < 4 && $year == 2021) {
+        if ($month <= 4 && $year == 2021) {
             array_push($Flex_Pre, $rating);
-        } elseif ($month > 3 && $year == 2021) {
+        } elseif ($month >= 5 && $year == 2021) {
             array_push($Flex_Post, $rating);
        }
     }
@@ -91,3 +73,6 @@ $FlexPostMean = round(($FlexPostSum/$FlexPostN),2);
 $FlexPreN  = count($Flex_Pre);
 $FlexPreSum = array_sum($Flex_Pre);
 $FlexPreMean = round(($FlexPreSum/$FlexPreN),2);
+
+$FlexPreDist = array_count_values($Flex_Pre);
+$FlexPostDist = array_count_values($Flex_Post);

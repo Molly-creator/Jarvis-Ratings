@@ -5,6 +5,8 @@ class DashBoard
 {
     private array $Ratings = [];
     private array $Dates = [];
+    public $Star = "<span id='star' class='material-icons'>&#xe838;</span>";
+    public $EmptyStar = "<span id='star' class='material-icons'>&#xf06f;</span>";
 
     public function __construct($Exercise)
     {   
@@ -16,6 +18,7 @@ class DashBoard
 
     private function RatingDistribution($title)
     {   
+
         $Ratings = $this->Ratings;
         $ExTitle = $title->getTitle();
         $ratings = $title->getRating();
@@ -37,12 +40,13 @@ class DashBoard
     }
 
     public function showDashboard()
-    {   
+    {   $star= $this->Star;
+        $Empty = $this->EmptyStar;
         $Ratings = $this->Ratings;
 
         echo "<table>"; 
         echo "<tr><th>Dashboard ratings Bit Academy excersises</th></tr>" . PHP_EOL;
-        echo "<tr><td>title</td><td>total</td><td>5 star</td><td>4 star</td><td>3 star</td><td>2 star</td><td>1 star</td><td>mean</td><tr>";       
+        echo "<tr><td>title</td><td>total</td><td>$star $star $star $star $star</td><td>$Empty $star $star $star $star</td><td>$Empty $Empty $star $star $star</td><td>$Empty $Empty $Empty $star $star</td><td>$Empty $Empty $Empty $Empty $star</td><td>mean</td><tr>";
         foreach ($Ratings as $title => $x) {
             
                 $RatingDist = array_count_values($x);
@@ -58,7 +62,10 @@ class DashBoard
     }
 
     public function displayMonthRatings($excersise)
-    {   $excersise = (string)$excersise;
+    {   
+        $star= $this->Star;
+        $Empty = $this->EmptyStar;
+        $excersise = (string)$excersise;
         $Ratings = $this->Ratings;
         $ExRating = $Ratings[$excersise];
 
@@ -122,9 +129,10 @@ class DashBoard
                 'december' => $Rdec,
             ];  
         }
+        
         echo "<table>"; 
         echo "<tr><th>Dashboard monthly ratings <span>$excersise</span></th></tr>". PHP_EOL;
-        echo "<tr><td>month</td><td>total</td><td>5 star</td><td>4 star</td><td>3 star</td><td>2 star</td><td>1 star</td><td>mean</td><tr>";
+        echo "<tr><td>month</td><td>total</td><td>$star $star $star $star $star</td><td>$Empty $star $star $star $star</td><td>$Empty $Empty $star $star $star</td><td>$Empty $Empty $Empty $star $star</td><td>$Empty $Empty $Empty $Empty $star</td><td>mean</td><tr>";
 
         foreach ($DistMonth as $month => $val) {
             $RMdist = array_count_values($val);

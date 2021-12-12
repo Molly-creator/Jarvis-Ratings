@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="./script.js" defer></script>
     <title>Jarvis Ratings</title>
 </head>
 
@@ -17,15 +18,20 @@ require('./ratings.php');
 ?>
 
 <body>
-    <nav>
-        
-        <ul>
-            <h1 id="logo">community<span>challenge</span></h1>
-            <li><a href="#home">Vraag 1</a></li>
-            <li><a href="#rating">Vraag 2</a></li>
-            <li><a href="#herzien">vraag 3</a></li>
-        </ul>
-    </nav>
+    <div class="navbar">
+        <nav>
+
+            <ul>
+                <li><a href="https://community-challenge.netlify.app/">
+                        <h1 id="logo">community<span>challenge</span>
+                    </a></h1>
+                </li>
+                <li><a href="#home">1 <span id='star' class='material-icons'>&#xe838;</span></a></li>
+                <li><a href="#rating">2 <span id='star' class='material-icons'>&#xe838;</span></a></li>
+                <li><a href="#herzien">3 <span id='star' class='material-icons'>&#xe838;</span></a></li>
+            </ul>
+        </nav>
+    </div>
     <div class="container">
 
         <section id="home">
@@ -41,15 +47,18 @@ require('./ratings.php');
                 }
                 $UniqueExercises = array_unique($ExerciseTitle);
                 echo "Er zijn " . count($UniqueExercises) . " opdrachten in de Jarvis dataset: ";
-                ?><table id="exercises">
-                    <tr><td>Titel opdracht</td></tr>
+                ?>
+            <table id="exercises">
+                <tr>
+                    <td>Titel opdracht</td>
+                </tr>
                 <?php
                 foreach ($UniqueExercises as $title) {
                     echo "<tr><td>$title</td></tr>";
-                }
+                };
                 ?>
-                </table>
-                <br><br>Nu we deze basis informatie tot onze beschikken hebben gaan we verder kijken naar de daadwerkelijke ratings van de opdrachten.
+            </table>
+            <br><br>Nu we deze basis informatie tot onze beschikken hebben gaan we verder kijken naar de daadwerkelijke ratings van de opdrachten.
             </p>
         </section>
 
@@ -64,11 +73,14 @@ require('./ratings.php');
 
 
             <div class="OverviewTable">
-
                 <?php
                 $DashBoard->showDashboard();
                 ?>
             </div>
+
+
+
+
         </section>
         <section>
             <h3>Overzicht per opdracht</h3>
@@ -112,27 +124,125 @@ require('./ratings.php');
 
         </section>
         <section id="herzien">
+
             <h2>Reden tot voor verbetering</h2>
             <p>Op 1 mei 2021 is de opdracht <span>"Flex met boxen"</span> herzien, heeft dat geleid tot betere ratings?
                 Door de gegevens van de opdrachten te filteren op de specifieke opdracht <span>"Flex met boxen"</span> en de datum zijn er twee arrays ontstaan. Een de gemiddeldes van voor 1 mei 2021 en een met de ratings van erna. Hieronder zie je een tabel met daarin een kolom voor de n-waarde. Dit is het aantal beoordelingen. En het totaal, dat de som van alle ratings is. Hiermee is het gemiddelde uit te rekenen.
-                Voor de herziening van de opdracht was het gemiddelde <span>2,74</span> en na de wijziging was het gemiddelde <span>4,27</span>.
+                Voor de herziening van de opdracht was het gemiddelde <span>2,78</span> en na de wijziging was het gemiddelde <span>4,44</span>.
                 In het geval van deze opdracht heeft het veranderen van de opdracht het gemiddelde flink doen toenemen. Regelmatig de beoordelingen van de gebruikers analyseren is van belang om goed in te kunnen spelen op de gebruikerservaring.
             </p>
 
-            <?php
-            echo "<table>";
-            echo "<tr><td></td><td>N-value</td><td>Total</td><td>Mean</td></tr>";
-            echo "<tr><td>PRE</td><td>$FlexPreN</td><td>$FlexPreSum</td><td>$FlexPreMean</td></tr>";
-            echo "<tr><td>POST</td><td>$FlexPostN</td><td>$FlexPostSum</td><td>$FlexPostMean</td></tr>";
-            echo "</table>";
-            ?>
+            <table id="tbl-PrePost">
+                <tr>
+                    <td></td>
+                    <td>N-value</td>
+                    <td>Total</td>
+                    <td>Mean</td>
+                </tr>
+                <tr>
+                    <td>PRE</td>
+                    <td><?php echo $FlexPreN; ?></td>
+                    <td><?php echo $FlexPreSum; ?></td>
+                    <td><?php echo $FlexPreMean; ?></td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td><?php echo $FlexPostN; ?></td>
+                    <td><?php echo $FlexPostSum; ?></td>
+                    <td><?php echo $FlexPostMean; ?></td>
+                </tr>
+            </table>
+
+            <script>
+                window.onload = function() {
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        animationEnabled: true,
+                        theme: "light2", // "light1", "light2", "dark1", "dark2"
+                        axisX1: {
+                            title: "Dataverdeling ratings voor 1 mei 2021"
+                        },
+                        axisX2: {
+                            title: "Dataverdeling ratings na1 mei 2021"
+                        },
+
+
+                        axisYType: "secondary",
+                        data: [{
+                            type: "column",
+                            showInLegend: true,
+                            legendMarkerColor: "#6b87e8",
+                            name: "Voor 1 mei",
+                            dataPoints: [{
+                                    y: <?php echo (empty($FlexPreDist[5])) ? 0 : ($FlexPreDist[5]); ?>,
+                                    label: "5"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPreDist[4])) ? 0 : ($FlexPreDist[4]); ?>,
+                                    label: "4"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPreDist[3])) ? 0 : ($FlexPreDist[3]); ?>,
+                                    label: "3"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPreDist[2])) ? 0 : ($FlexPreDist[2]); ?>,
+                                    label: "2"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPreDist[1])) ? 0 : ($FlexPreDist[1]); ?>,
+                                    label: "1"
+                                }
+                            ]
+                        }, {
+                            type: "column",
+                            axisYType: "secondary",
+                            showInLegend: true,
+                            legendMarkerColor: "mediumaquamarine",
+                            name: "Na 1 mei",
+                            dataPoints: [{
+                                    y: <?php echo (empty($FlexPostDist[5])) ? 0 : ($FlexPostDist[5]); ?>,
+                                    label: "5"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPostDist[4])) ? 0 : ($FlexPostDist[4]); ?>,
+                                    label: "4"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPostDist[3])) ? 0 : ($FlexPostDist[3]); ?>,
+                                    label: "3"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPostDist[2])) ? 0 : ($FlexPostDist[2]); ?>,
+                                    label: "2"
+                                },
+                                {
+                                    y: <?php echo (empty($FlexPostDist[1])) ? 0 : ($FlexPostDist[1]); ?>,
+                                    label: "1"
+                                }
+                            ]
+                        }]
+                    });
+
+                    chart.render();
+                };
+            </script>
+
+            <div id="chartContainer"></div>
+
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         </section>
     </div>
-    
+
 </body>
-<footer>
-        <img src="./icons8-github-24.png" alt="GitHub cat-icon"><li><a href="https://github.com/Molly-creator/Jarvis-Ratings">Git</a></li>
-        <span>Dorian van Buel</span>
-    </footer>
+<div class="footerbar">
+    <footer>
+        <ul>
+            <img src="./icons8-github-24.png" alt="GitHub cat-icon">
+            <li><a href="https://github.com/Molly-creator/Jarvis-Ratings">git</a></li>
+            <span>Dorian van Buel</span>
+        </ul>
+</div>
+</footer>
+
 </html>
